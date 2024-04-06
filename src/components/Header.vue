@@ -112,6 +112,9 @@
         flex-shrink: 0;
         cursor: pointer;
     }
+    header .logo h1{
+        display: flex;
+    }
     header .logo h1 a{
         font-size: 1.5rem;
         color: #fff;
@@ -121,6 +124,7 @@
         align-items: center;
         width: 300px;
         position: relative;
+        margin-right: 5px;
     }
     header .search input[type=text]{
         width: 100%;
@@ -183,7 +187,7 @@
             margin: 10px 5px;
         }
         header .logo{
-            margin-left: 50px ;
+            margin-left: 60px ;
             position: relative;
             z-index: 5;
         }

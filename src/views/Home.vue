@@ -8,6 +8,7 @@
     <Header></Header>
     <Banner></Banner>
     <ProductList></ProductList>
+    
 </template>
 
 <style scoped>

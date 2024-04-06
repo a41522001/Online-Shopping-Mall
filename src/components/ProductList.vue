@@ -1,7 +1,6 @@
 <script setup>
-    import { ref, inject } from "vue";
+    import { ref, inject, onMounted } from "vue";
     const products = inject("products");
-    console.log(products);
 </script>
 
 <template>
@@ -9,10 +8,12 @@
         <ul>
             <li v-for="product in products" class="list" :key="product.id">
                 <div class="pic">
+                    <router-link :to="`/product/${product.id}`">
                     <div class="filter"></div>
                     <img :src="product.image" alt="">
+                    </router-link>
                 </div>
-                <h1><router-link :to="`/${product.id}`">{{ product.name }}</router-link></h1>
+                <h1><router-link :to="`/product/${product.id}`">{{ product.name }}</router-link></h1>
                 <p>${{ product.price }}</p>
             </li>
         </ul>

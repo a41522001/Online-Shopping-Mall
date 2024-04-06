@@ -6,7 +6,6 @@
     onMounted(async() => {
         const res = await fetch("https://raw.githubusercontent.com/a41522001/product/main/product.json");
         products.value = await res.json();
-        console.log(products.value);
     })
 </script>
 
