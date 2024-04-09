@@ -5,9 +5,11 @@
     //以下區塊邏輯: 先讓導入路由再設置常數來實現訪問路由 
     //再宣告productDetail後面要訪問路由的參數(也就是id)的值
     //對應從App.vue抓下來的資料傳進去
-    import { useRoute } from "vue-router";
+    import { useRoute, useRouter } from "vue-router";
     const route = useRoute();
+    const router = useRouter();
     const productDetail = ref(null);
+    const repeatProduct = ref(false);
     //先訪問到路由的參數ID並傳進一個常數
     //再用整串API資料利用陣列的find方法來尋找對應的id資料形成單一物件並傳進product
     //再把剛抓到的物件賦值給productDetail常數
@@ -15,12 +17,30 @@
         const productId = route.params.id;
         const product = products.value.find(product => product.id == productId);
         productDetail.value = product;
+        if(localStorage.getItem("cart")){
+            carts.value = JSON.parse(localStorage.getItem("cart"));
+        }
     })
+    //因重新整理頁面時會導致products讀取不到
+    //所以利用watchEffect先監聽一次products的值 再重新執行一遍尋找ID的邏輯
     watchEffect(() => {
         const productId = route.params.id;
         const product = products.value.find(product => product.id == productId);
         productDetail.value = product;
     });
+    //添加購物車邏輯區
+    const carts = ref([]);
+    function addCart(){
+        if(carts.value.find(cart => cart.id == productDetail.value.id)){
+            repeatProduct.value = !repeatProduct.value;
+        }else{
+            carts.value.push(productDetail.value);
+            localStorage.setItem("cart", JSON.stringify(carts.value));
+        }
+    }
+    function prevPage(){
+        router.back();
+    }
 </script>
 
 <template>
@@ -31,6 +51,7 @@
         才渲染到<template>模板裡-->
         <div class="product" v-if="productDetail">
             <div class="wrap">
+                <button class="prev" @click="prevPage()">上一頁</button>
                 <div class="pic">
                     <img :src="productDetail.image" alt="">
                 </div>
@@ -43,7 +64,13 @@
             </div>
         </div>
         <div class="footer">
-            <button>加入購物車</button>
+            <button @click="addCart()">加入購物車</button>
+        </div>
+    </div>
+    <div class="modal" v-show="repeatProduct">
+        <div class="content">
+            <p>此商品已在購物車內</p>
+            <button @click="repeatProduct = !repeatProduct">確定</button>
         </div>
     </div>
 </template>
@@ -63,6 +90,18 @@
     }
     .product .wrap{
         padding: 0 30px;
+        position: relative;
+    }
+    .product .prev{
+        padding: 5px 15px;
+        background-color: #6e62e0;
+        color: #fff;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
     }
     .product .pic{
         width: 75%;
@@ -113,11 +152,43 @@
         border: none;
         border-radius: 10px
     }
-    .footer button:hover,
-    .footer button:active{
-        transform: scale(1.1);
+    .footer button:hover{
         opacity: .8;
         color: #333;
+    }
+    .modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+    .modal .content{
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 10px;
+    }
+    .modal p{
+        font-size: 1.75rem;
+    }
+    .modal button{
+        font-size: 1.5rem;
+        padding: 10px 30px;
+        background-color: #6e62e0;
+        color: #fff;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
     }
     @media (max-width: 850px) {
         .product .pic{
@@ -127,7 +198,7 @@
     }
     @media (max-width: 450px) {
         .product{
-            padding: 50px 0;
+            padding: 10px 0;
         }
         .product .pic{
             width: 100%;

@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, computed } from "vue";
+    import { ref, computed, Transition } from "vue";
     const userName = ref("Maru");
     const accountState = computed(() => {
         return userName.value? "登出" : "登入";
@@ -7,6 +7,22 @@
     const helloName = computed( () => {
         return "你好" + userName.value + "!";
     })
+    const showModal = ref(false);
+    function openModal(){
+        showModal.value = !showModal.value;
+        
+    }
+    function logout(){
+        userName.value = "";
+        showModal.value = !showModal.value;   
+    }
+    function inputName(){
+        const inputUserName = document.querySelector("#user-name").value;
+        if(inputUserName){
+            userName.value = inputUserName;
+        }
+        showModal.value = false;
+    }
 </script>
 
 <template>
@@ -22,9 +38,7 @@
                 <li v-show="userName">{{ helloName }}</li>
                 <li><router-link to="/home">首頁</router-link></li>
                 <li><router-link to="/cart">購物車</router-link></li>
-                <li><a href="#">結帳</a></li>
-                <li><a href="#">{{ accountState }}</a></li>
-                <li><a href="#">註冊</a></li>
+                <li><a href="#" @click="openModal()">{{ accountState }}</a></li>
             </ul>
         </nav>
         <div class="logo">
@@ -37,6 +51,23 @@
             </div>
         </div>
     </header>
+    <Transition name="modal">
+        <div class="modal" v-show="showModal">
+            <div class="content">
+                <div class="logout" v-if="userName">
+                    <span @click="showModal = !showModal">&times;</span>
+                    <p>確定要登出嗎</p>
+                    <button @click="logout()">確定</button>
+                </div>
+                <div class="login" v-else>
+                    <span @click="showModal = !showModal">&times;</span>
+                    <label for="user-name">用戶名</label><br>
+                    <input type="text" id="user-name"  @keyup.enter="inputName()"><br>
+                    <button @click="inputName()">確定</button>
+                </div>    
+            </div>
+        </div>
+    </Transition>
 </template>
 
 <style scoped>
@@ -146,6 +177,84 @@
     header .search-pic img{
         width: 100%;
         height: 100%;
+    }
+    .modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+    .modal .content{
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 30px;
+        position: relative;
+    }
+    .modal span{
+        cursor: pointer;
+        font-size: 1.5rem;
+        position: absolute;
+        top: -5px;
+        right: 0px;
+    }
+    .modal-enter-from,
+    .modal-leave-to{
+        opacity: 0;
+    }
+    .modal-enter-to,
+    .modal-leave-from{
+        opacity: 1;
+    }
+    .modal-enter-active,
+    .modal-leave-active{
+        transition: opacity .2s;
+    }
+    .logout{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .logout p{
+        font-size: 2rem;
+    }
+    .logout button{
+        margin-top: 50px;
+        padding: 5px 40px;
+        border: none;
+        border-radius: 5px;
+        background-color: #49948a;
+        color: #fff;
+        cursor: pointer;
+    }
+    .login input{
+        font-size: initial;
+        margin: 10px 0 20px 0;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #333;
+        padding: 2px 5px;
+    }
+    .login button{
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #49948a;
+        color: #fff;
+        cursor: pointer;
     }
     @media (max-width: 1200px) {
         header{
