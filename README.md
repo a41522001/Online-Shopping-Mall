@@ -7,7 +7,8 @@
 </p>
 <hr>
 <h3>使用工具與技術:</h3>
-<p>使用框架為Vue3.js compostiton API以及Router，在Vue組件方面重複利用Header組件，並在Header組件使用RWD來實現在行動裝置變換成漢堡選單。<br>
-組件及路由之間使用provide及inject來進行深層傳遞，商品加入購物車時則是使用localStroge進行傳遞。<br>
+<p>使用框架為Vue3.js compostiton API以及Router。<br>
+在Vue組件方面重複利用Header組件，並在Header組件使用RWD來實現在行動裝置變換成漢堡選單。<br>
 在Vue路由方面在商品詳細資訊頁面綁定ID，並以各個不同ID來渲染對應商品的資訊。<br>
+組件及路由之間使用provide及inject來進行深層傳遞，商品加入購物車時則是使用localStroge進行傳遞。<br>
 在每一個頁面都實作RWD並測試在不同裝置及瀏覽器系統是否破版。</p>
