@@ -1,6 +1,9 @@
 <script setup>
-    import { ref, computed, Transition } from "vue";
-    const userName = ref("Maru");
+    import { ref, computed, Transition, inject } from "vue";
+    import { useRouter } from "vue-router";
+    const router = useRouter();
+    const products = inject("products");
+    const userName = ref("");
     const accountState = computed(() => {
         return userName.value? "登出" : "登入";
     })
@@ -22,6 +25,22 @@
             userName.value = inputUserName;
         }
         showModal.value = false;
+    }
+    //搜索框邏輯區
+    const search = ref("");
+    const errorMessage = ref(false);
+    function searchProduct(){
+        if(search.value === ""){
+            return;
+        }
+        const findProduct = products.value.filter( product => product.name.includes(search.value) )
+        if(findProduct.length === 0){ 
+            search.value = "";
+            errorMessage.value = !errorMessage.value;
+            return;
+        }
+        search.value = "";
+        router.push({path: `/product/${findProduct[0].id}`});
     }
 </script>
 
@@ -45,8 +64,8 @@
             <h1><router-link to="/home">購物網站</router-link></h1>
         </div>
         <div class="search">
-            <input type="text" name="" id="">
-            <div class="search-pic">
+            <input type="text" v-model="search" @keyup.enter="searchProduct()">
+            <div class="search-pic" @click="searchProduct()">
                 <img src="https://cdn-icons-png.flaticon.com/512/54/54481.png" alt="">
             </div>
         </div>
@@ -66,11 +85,52 @@
                     <button @click="inputName()">確定</button>
                 </div>    
             </div>
+            
+        </div>
+    </Transition>
+    <Transition name="error-modal">
+        <div class="error-modal" v-show="errorMessage">
+            <div class="content">
+                <span @click="errorMessage = !errorMessage">&times;</span>
+                <p>未搜索到此商品，請輸入正確的關鍵字</p>
+            </div>
         </div>
     </Transition>
 </template>
 
 <style scoped>
+    .error-modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+    .error-modal .content{
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .error-modal span{
+        cursor: pointer;
+        font-size: 1.5rem;
+        position: absolute;
+        top: -5px;
+        right: 0px;
+    }
+    .error-modal p{
+        color: #f00;
+        font-size: 1.05rem;
+    }
     .humburger{
         display: none;
         border: 1px solid #888;
@@ -241,6 +301,7 @@
         cursor: pointer;
     }
     .login input{
+        width: 200px;
         font-size: initial;
         margin: 10px 0 20px 0;
         border-radius: 5px;

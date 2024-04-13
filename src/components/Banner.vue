@@ -83,11 +83,10 @@
         position: absolute;
         top: 50%;
         z-index: 3;
-        display: block;
+        display: inline-block;
         width: 50px;
         height: 50px;
         text-align: center;
-        padding-top: 2px;
     }
     .prev:hover, .next:hover,
     .prev:active, .next:active{
@@ -137,8 +136,8 @@
         .prev,
         .next{
             font-size: 1.5rem;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 38px;
         }
     }
 </style>
