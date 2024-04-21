@@ -45,7 +45,7 @@
 </script>
 
 <template>
-    <label class="humburger" for="toggle">
+    <label class="hamburger" for="toggle">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
@@ -131,7 +131,7 @@
         color: #f00;
         font-size: 1.05rem;
     }
-    .humburger{
+    .hamburger{
         display: none;
         border: 1px solid #888;
         background-color: rgba(250, 244, 244, 0.863);
@@ -142,13 +142,13 @@
         z-index: 10;
         cursor: pointer;
     }
-    .humburger:hover,
-    .humburger:active,
+    .hamburger:hover,
+    .hamburger:active,
     header .logo:hover,
     header .log:active{
         opacity: .8;
     }
-    .humburger .bar{
+    .hamburger .bar{
         display: block;
         width: 25px;
         height: 3px;

@@ -10,7 +10,7 @@
                 <div class="pic">
                     <router-link :to="`/product/${product.id}`">
                     <div class="filter"></div>
-                    <img :src="product.image" alt="">
+                    <img :src="product.image" :alt="product.name">
                     </router-link>
                 </div>
                 <h1><router-link :to="`/product/${product.id}`">{{ product.name }}</router-link></h1>
