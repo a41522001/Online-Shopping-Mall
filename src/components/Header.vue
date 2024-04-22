@@ -1,6 +1,7 @@
 <script setup>
     import { ref, computed, Transition, inject } from "vue";
     import { useRouter } from "vue-router";
+    import Signup from "./Signup.vue";
     const router = useRouter();
     const products = inject("products");
     const userName = ref("");
@@ -10,22 +11,6 @@
     const helloName = computed( () => {
         return "你好" + userName.value + "!";
     })
-    const showModal = ref(false);
-    function openModal(){
-        showModal.value = !showModal.value;
-        
-    }
-    function logout(){
-        userName.value = "";
-        showModal.value = !showModal.value;   
-    }
-    function inputName(){
-        const inputUserName = document.querySelector("#user-name").value;
-        if(inputUserName){
-            userName.value = inputUserName;
-        }
-        showModal.value = false;
-    }
     //搜索框邏輯區
     const search = ref("");
     const errorMessage = ref(false);
@@ -57,7 +42,7 @@
                 <li v-show="userName">{{ helloName }}</li>
                 <li><router-link to="/home">首頁</router-link></li>
                 <li><router-link to="/cart">購物車</router-link></li>
-                <li><a href="#" @click="openModal()">{{ accountState }}</a></li>
+                <li><Signup></Signup></li>
             </ul>
         </nav>
         <div class="logo">
@@ -70,24 +55,6 @@
             </div>
         </div>
     </header>
-    <Transition name="modal">
-        <div class="modal" v-show="showModal">
-            <div class="content">
-                <div class="logout" v-if="userName">
-                    <span @click="showModal = !showModal">&times;</span>
-                    <p>確定要登出嗎</p>
-                    <button @click="logout()">確定</button>
-                </div>
-                <div class="login" v-else>
-                    <span @click="showModal = !showModal">&times;</span>
-                    <label for="user-name">用戶名</label><br>
-                    <input type="text" id="user-name"  @keyup.enter="inputName()"><br>
-                    <button @click="inputName()">確定</button>
-                </div>    
-            </div>
-            
-        </div>
-    </Transition>
     <Transition name="error-modal">
         <div class="error-modal" v-show="errorMessage">
             <div class="content">
@@ -329,7 +296,7 @@
         }
     }
     @media (max-width: 850px) {
-        .humburger{
+        .hamburger{
             display: inline-block;
         }
         header{
