@@ -9,7 +9,7 @@
     const userError = ref(false);
     const emailError = ref(false);
     const passwordError = ref(false);
-    const signupErrorMessage = computed(() => authStore.signupErrorMessage)
+    const signupErrorMessage = computed(() => authStore.signupErrorMessage);
     const signupSuccessModal = ref(false);
     function openSignupModal(){
         showModal.value = true;

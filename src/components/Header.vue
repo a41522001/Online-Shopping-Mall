@@ -1,12 +1,15 @@
 <script setup>
     import { ref, computed, Transition, inject } from "vue";
     import { useRouter } from "vue-router";
+    import { useAuthStore } from "../stores/authStore";
     import Signup from "./Signup.vue";
+    import Login from "./Login.vue";
+    const authStore = useAuthStore();
     const router = useRouter();
     const products = inject("products");
-    const userName = ref("");
+    const userName = computed(() => authStore.memberName);
     const accountState = computed(() => {
-        return userName.value? "登出" : "登入";
+        return userName.value? false : true;
     })
     const helloName = computed( () => {
         return "你好" + userName.value + "!";
@@ -43,6 +46,7 @@
                 <li><router-link to="/home">首頁</router-link></li>
                 <li><router-link to="/cart">購物車</router-link></li>
                 <li><Signup></Signup></li>
+                <li><Login></Login></li>
             </ul>
         </nav>
         <div class="logo">
@@ -141,6 +145,7 @@
         display: flex;
         align-items: center;
         list-style: none;
+        min-width: 100px;
     }
     header .navbar li{
         color: #fff;
@@ -148,7 +153,7 @@
         font-size: 1.25rem;
     }
     header .navbar li:first-child{
-        max-width: 120px;
+        max-width: 150px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -319,9 +324,14 @@
         header .navbar ul{
             flex-direction: column;
             margin-top: 50px;
+            max-width: 150px;
         }
         header .navbar ul li{
             margin: 10px 5px;
+        }
+        header .navbar ul li:nth-child(n+4){
+            position: relative;
+            z-index: 8;
         }
         header .logo{
             margin-left: 60px ;

@@ -25,7 +25,12 @@ export const useAuthStore = defineStore("auth", () => {
         if(!errorMessage.value){
             return "";
         }        
-})
+    })
+    const loginErrorMessage = computed(() => {
+        if(errorMessage.value !== ""){
+            return "錯誤的帳號或密碼";
+        }
+    })
     async function signup(email, password, userName){
         try{
             errorMessage.value = "";
@@ -42,5 +47,17 @@ export const useAuthStore = defineStore("auth", () => {
             console.log("註冊失敗", signupErrorMessage.value);
         }   
     }
-    return { signupErrorMessage, memberName, signup }
+
+    async function login(email, password){
+        errorMessage.value = "";
+        try{
+            const res = await signInWithEmailAndPassword(auth, email, password);
+            memberName.value = res.user.displayName;
+            console.log(res.user);
+        }catch(err){
+            errorMessage.value = err.code;
+            console.log("登入失敗:", err.message);
+        }
+    }
+    return { signupErrorMessage, loginErrorMessage, memberName, signup, login }
 })
