@@ -46,26 +46,28 @@
 
 <template>
     <p @click="openLoginModal()">登入</p>
-    <div class="login-modal" v-if="showModal">
-        <div class="modal-content">
-            <span @click="closeLoginModal()">&times;</span>
-            <form class="login-form">
-                <label for="login-email">電子郵件
-                    <span v-show="userError">請填寫帳號或密碼</span>
-                </label>
-                <input type="text" id="login-email" v-model="loginEmail">
-                <label for="login-password">密碼
-                    <span v-show="loginError">{{ loginErrorMessage }}</span>
-                </label>
-                <input type="password" id="login-password" v-model="loginPassword">
-                <button @click.prevent="login()">登入</button>
-            </form>
+    <Teleport to="body">
+        <div class="login-modal" v-if="showModal">
+            <div class="modal-content">
+                <span @click="closeLoginModal()">&times;</span>
+                <form class="login-form">
+                    <label for="login-email">電子郵件
+                        <span v-show="userError">請填寫帳號或密碼</span>
+                    </label>
+                    <input type="text" id="login-email" v-model="loginEmail">
+                    <label for="login-password">密碼
+                        <span v-show="loginError">{{ loginErrorMessage }}</span>
+                    </label>
+                    <input type="password" id="login-password" v-model="loginPassword">
+                    <button @click.prevent="login()">登入</button>
+                </form>
+            </div>
         </div>
-    </div>
+    </Teleport>
 </template>
 
 <style scoped>
-    p{
+    p{  
         cursor: pointer;
         font-size: 1rem;
     }
@@ -117,10 +119,11 @@
         transform: translateY(-50%);
     }
     .login-form input{
+        width: 230px;
         border-radius: 5px;
         padding: 2px 5px;
         border: 1px #222121 solid;
-        font-size: initial;
+        font-size: 16px;
     }
     .login-form button{
         align-self: center;

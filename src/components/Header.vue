@@ -84,7 +84,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 10;
+        z-index: 5;
     }
     .error-modal .content{
         width: 300px;
@@ -114,7 +114,7 @@
         position: absolute;
         top: 10px;
         left: 5px;
-        z-index: 10;
+        z-index: 5;
         cursor: pointer;
     }
     .hamburger:hover,
@@ -143,7 +143,7 @@
     header .navbar{
         display: flex;
         position: relative;
-        z-index: 3;
+        z-index: 4;
     }
     header .navbar ul{
         display: flex;
@@ -214,85 +214,7 @@
         width: 100%;
         height: 100%;
     }
-    .modal{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, .8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10;
-    }
-    .modal .content{
-        width: 300px;
-        height: 200px;
-        background-color: #fff;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 30px;
-        position: relative;
-    }
-    .modal span{
-        cursor: pointer;
-        font-size: 1.5rem;
-        position: absolute;
-        top: -5px;
-        right: 0px;
-    }
-    .modal-enter-from,
-    .modal-leave-to{
-        opacity: 0;
-    }
-    .modal-enter-to,
-    .modal-leave-from{
-        opacity: 1;
-    }
-    .modal-enter-active,
-    .modal-leave-active{
-        transition: opacity .2s;
-    }
-    .logout{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .logout p{
-        font-size: 2rem;
-    }
-    .logout button{
-        margin-top: 50px;
-        padding: 5px 40px;
-        border: none;
-        border-radius: 5px;
-        background-color: #49948a;
-        color: #fff;
-        cursor: pointer;
-    }
-    .login input{
-        width: 200px;
-        font-size: initial;
-        margin: 10px 0 20px 0;
-        border-radius: 5px;
-        outline: none;
-        border: 1px solid #333;
-        padding: 2px 5px;
-    }
-    .login button{
-        padding: 5px 15px;
-        border: none;
-        border-radius: 5px;
-        background-color: #49948a;
-        color: #fff;
-        cursor: pointer;
-    }
+    
     @media (max-width: 1200px) {
         header{
             gap: 10px
@@ -335,7 +257,7 @@
         }
         header .navbar ul li:nth-child(n+4){
             position: relative;
-            z-index: 8;
+            z-index: 5;
         }
         header .logo{
             margin-left: 60px ;

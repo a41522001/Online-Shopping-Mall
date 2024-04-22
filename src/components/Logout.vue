@@ -22,13 +22,15 @@
 
 <template>
     <p @click="openLogoutModal()">登出</p>
-    <div class="logout-modal" v-if="showModal">
-        <div class="modal-content">
-            <span @click="closeLogoutModal()">&times;</span>
-            <p>確定登出嗎?</p>
-            <button @click="logout()">確定</button>
+    <Teleport to="body">
+        <div class="logout-modal" v-if="showModal">
+            <div class="modal-content">
+                <span @click="closeLogoutModal()">&times;</span>
+                <p>確定登出嗎?</p>
+                <button @click="logout()">確定</button>
+            </div>
         </div>
-    </div>
+    </Teleport>
 </template>
 
 <style scoped>

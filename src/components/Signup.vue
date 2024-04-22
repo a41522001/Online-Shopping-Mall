@@ -59,32 +59,34 @@
 
 <template>
     <p @click="openSignupModal()">註冊</p>
-    <div class="signup-modal" v-if="showModal">
-        <div class="modal-content">
-            <span @click="closeSignupModal()">&times;</span>
-            <form class="signup-form">
-                <label for="signup-name">用戶名
-                    <span v-show="userError">請填寫正確的資訊</span>
-                </label>
-                <input type="text" id="signup-name" v-model="signupName">
-                <label for="signup-email">電子郵件
-                    <span v-show="emailError">{{ signupErrorMessage }}</span>
-                </label>
-                <input type="text" id="signup-email" v-model="signupEmail">
-                <label for="signup-password">密碼
-                    <span v-show="passwordError">{{ signupErrorMessage }}</span>
-                </label>
-                <input type="password" id="signup-password" v-model="signupPassword">
-                <button @click.prevent="signup()">註冊</button>
-            </form>
-            <div class="success-modal" v-show="signupSuccessModal">
-                <div class="success-modal-content">
-                    <p>成功註冊!!</p>
-                    <p>請等待跳轉...</p>
+    <Teleport to="body">
+        <div class="signup-modal" v-if="showModal">
+            <div class="modal-content">
+                <span @click="closeSignupModal()">&times;</span>
+                <form class="signup-form">
+                    <label for="signup-name">用戶名
+                        <span v-show="userError">請填寫正確的資訊</span>
+                    </label>
+                    <input type="text" id="signup-name" v-model="signupName">
+                    <label for="signup-email">電子郵件
+                        <span v-show="emailError">{{ signupErrorMessage }}</span>
+                    </label>
+                    <input type="text" id="signup-email" v-model="signupEmail">
+                    <label for="signup-password">密碼
+                        <span v-show="passwordError">{{ signupErrorMessage }}</span>
+                    </label>
+                    <input type="password" id="signup-password" v-model="signupPassword">
+                    <button @click.prevent="signup()">註冊</button>
+                </form>
+                <div class="success-modal" v-show="signupSuccessModal">
+                    <div class="success-modal-content">
+                        <p>成功註冊!!</p>
+                        <p>請等待跳轉...</p>
+                    </div>
                 </div>
-            </div>
-        </div>    
-    </div>
+            </div>    
+        </div>
+    </Teleport>
 </template>
 
 <style scoped>
@@ -140,10 +142,11 @@
         transform: translateY(-50%);
     }
     .signup-form input{
+        width: 230px;
         border-radius: 5px;
         padding: 2px 5px;
         border: 1px #222121 solid;
-        font-size: initial;
+        font-size: 16px;
     }
     .signup-form button{
         align-self: center;
