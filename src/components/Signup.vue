@@ -143,6 +143,7 @@
         border-radius: 5px;
         padding: 2px 5px;
         border: 1px #222121 solid;
+        font-size: initial;
     }
     .signup-form button{
         align-self: center;

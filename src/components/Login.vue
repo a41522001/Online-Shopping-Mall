@@ -8,7 +8,6 @@
     const userError = ref(false);
     const loginError = ref(false);
     const loginErrorMessage = computed(() => authStore.loginErrorMessage);
-    const loginSuccessModal = ref(false);
     const login = async () => {
         if(loginEmail.value === "" || loginPassword.value === ""){
             userError.value = true;
@@ -24,12 +23,7 @@
                 return;
             }else{
                 loginError.value = false;
-            }
-            loginSuccessModal.value = true;
-            setTimeout(() => {
-                loginSuccessModal.value = false;
-                closeLoginModal();
-            }, 2000)  
+            }   
         }catch(err){
             console.log(err);
         }
@@ -66,12 +60,6 @@
                 <input type="password" id="login-password" v-model="loginPassword">
                 <button @click.prevent="login()">登入</button>
             </form>
-            <div class="success-modal" v-show="loginSuccessModal">
-                <div class="success-modal-content">
-                    <p>成功登入!!</p>
-                    <p>請等待跳轉...</p>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -132,6 +120,7 @@
         border-radius: 5px;
         padding: 2px 5px;
         border: 1px #222121 solid;
+        font-size: initial;
     }
     .login-form button{
         align-self: center;
@@ -143,32 +132,5 @@
         color: #fff;
         cursor: pointer;
         font-size: 1.15rem;
-    }
-    .success-modal{
-        border-radius: 20px;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, .8);
-        z-index: 11;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .success-modal-content{
-        width: 50%;
-        height: 50%;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
-    .success-modal-content p{
-        color: #000;
-        font-size: 1.25rem;
     }
 </style>
