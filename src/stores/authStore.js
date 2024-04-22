@@ -31,6 +31,15 @@ export const useAuthStore = defineStore("auth", () => {
             return "錯誤的帳號或密碼";
         }
     })
+
+    onAuthStateChanged(auth, (firebaseUser) => {
+        if(firebaseUser){
+            memberName.value = firebaseUser.displayName;
+        }else{
+            memberName.value = "";
+        }
+    })
+
     async function signup(email, password, userName){
         try{
             errorMessage.value = "";
@@ -59,5 +68,15 @@ export const useAuthStore = defineStore("auth", () => {
             console.log("登入失敗:", err.message);
         }
     }
-    return { signupErrorMessage, loginErrorMessage, memberName, signup, login }
+    
+    async function logout(){
+        try{
+            await signOut(auth);
+            memberName.value = "";
+            console.log("登出成功");
+        }catch(err){
+            console.log("登出失敗:", err.message);
+        }
+    }
+    return { signupErrorMessage, loginErrorMessage, memberName, signup, login, logout }
 })

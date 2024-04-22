@@ -4,6 +4,7 @@
     import { useAuthStore } from "../stores/authStore";
     import Signup from "./Signup.vue";
     import Login from "./Login.vue";
+    import Logout from "./Logout.vue";
     const authStore = useAuthStore();
     const router = useRouter();
     const products = inject("products");
@@ -46,7 +47,10 @@
                 <li><router-link to="/home">首頁</router-link></li>
                 <li><router-link to="/cart">購物車</router-link></li>
                 <li><Signup></Signup></li>
-                <li><Login></Login></li>
+                <li>
+                    <Login v-if="accountState"></Login>
+                    <Logout v-else></Logout>
+                </li>
             </ul>
         </nav>
         <div class="logo">
