@@ -1,6 +1,7 @@
 <script setup>
     import Header from "../components/Header.vue";
     import { onMounted, ref, watch, computed } from "vue";
+    import Payment from "../components/Payment.vue";
     const count = ref(1);
     const carts = ref([]);
     onMounted(() => {
@@ -43,6 +44,7 @@
     //結帳邏輯區
     const showModal = ref(false);
     const nothing = ref(false);
+    const paymentModal = ref(false);
     function pay(){
         if(carts.value.length > 0 && carts.value.some(cart => cart.checked)){
             showModal.value = true;
@@ -51,6 +53,7 @@
         }    
     }
     function confrim(){
+        paymentModal.value = true;
         const buyProduct = carts.value.filter( cart => !cart.checked );
         carts.value = buyProduct;
         showModal.value = false;
@@ -110,6 +113,7 @@
             <button @click="nothing = false">確定</button>
         </div>
     </div>
+    <Payment v-show="paymentModal"></Payment>
 </template>
 
 <style scoped>

@@ -1,6 +1,9 @@
 <script setup>
     import Header from "../components/Header.vue";
-    import { ref, inject, onMounted, watchEffect } from "vue";
+    import { ref, inject, onMounted, watchEffect, computed } from "vue";
+    import { useAuthStore } from "../stores/authStore";
+    const authStore = useAuthStore();
+    const memberName = computed(() => authStore.memberName); 
     const products = inject("products");
     //以下區塊邏輯: 先讓導入路由再設置常數來實現訪問路由 
     //再宣告productDetail後面要訪問路由的參數(也就是id)的值
@@ -31,16 +34,26 @@
     //添加購物車邏輯區
     const carts = ref([]);
     function addCart(){
+        if(!memberName.value){
+            loginModal.value = true;
+            return;
+        }
         if(carts.value.find(cart => cart.id == productDetail.value.id)){
             repeatProduct.value = !repeatProduct.value;
         }else{
             carts.value.push(productDetail.value);
             localStorage.setItem("cart", JSON.stringify(carts.value));
+            successModal.value = true;
+
         }
     }
     function prevPage(){
         router.back();
     }
+
+    const loginModal = ref(false);
+
+    const successModal = ref(false);
 </script>
 
 <template>
@@ -67,10 +80,22 @@
             <button @click="addCart()">加入購物車</button>
         </div>
     </div>
-    <div class="modal" v-show="repeatProduct">
+    <div class="repeat-modal" v-show="repeatProduct">
         <div class="content">
             <p>此商品已在購物車內</p>
             <button @click="repeatProduct = !repeatProduct">確定</button>
+        </div>
+    </div>
+    <div class="warn-modal" v-show="loginModal">
+        <div class="content">
+            <span @click="loginModal = false">&times;</span>
+            <p>請先登入</p>
+        </div>
+    </div>
+    <div class="success-modal" v-show="successModal">
+        <div class="content">
+            <p>成功添加購物車!</p>
+            <button @click="successModal = false">確定</button>
         </div>
     </div>
 </template>
@@ -156,7 +181,7 @@
         opacity: .8;
         color: #333;
     }
-    .modal{
+    .repeat-modal{
         position: fixed;
         top: 0;
         left: 0;
@@ -168,7 +193,7 @@
         justify-content: center;
         z-index: 10;
     }
-    .modal .content{
+    .repeat-modal .content{
         width: 300px;
         height: 200px;
         background-color: #fff;
@@ -178,10 +203,78 @@
         justify-content: space-evenly;
         border-radius: 10px;
     }
-    .modal p{
+    .repeat-modal p{
         font-size: 1.75rem;
     }
-    .modal button{
+    .repeat-modal button{
+        font-size: 1.5rem;
+        padding: 10px 30px;
+        background-color: #6e62e0;
+        color: #fff;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+    }
+    .warn-modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+    }
+    .warn-modal .content{
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+    .warn-modal span{
+        cursor: pointer;
+        font-size: 1.5rem;
+        position: absolute;
+        top: 0;
+        right: 5px;
+    }
+    .warn-modal p{
+        color: #f00;
+        font-size: 1.75rem;
+    }
+    .success-modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+    .success-modal .content{
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 10px;
+    }
+    .success-modal p{
+        color: #008000;
+        font-size: 1.75rem;
+    }
+    .success-modal button{
         font-size: 1.5rem;
         padding: 10px 30px;
         background-color: #6e62e0;

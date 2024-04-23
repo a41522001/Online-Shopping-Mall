@@ -51,7 +51,7 @@
         z-index: 10;
     }
     .modal-content{
-        width: 200px;
+        width: 300px;
         height: 180px;
         background-color: #fff;
         display: flex;
