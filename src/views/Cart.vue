@@ -54,9 +54,17 @@
     }
     function confrim(){
         paymentModal.value = true;
-        const buyProduct = carts.value.filter( cart => !cart.checked );
-        carts.value = buyProduct;
-        showModal.value = false;
+        showModal.value = false;  
+    }
+    function submit(){
+        setTimeout(() => {
+            paymentModal.value = false;
+            carts.value = carts.value.filter( cart => !cart.checked ); 
+            showModal.value = false;
+        }, 2000)  
+    }
+    function closePaymentModal(){
+        paymentModal.value = false;
     }
 </script>
 
@@ -113,7 +121,7 @@
             <button @click="nothing = false">確定</button>
         </div>
     </div>
-    <Payment v-show="paymentModal"></Payment>
+    <Payment v-show="paymentModal" :total="total" @closeModal="closePaymentModal()" @submitPayment="submit()"></Payment>
 </template>
 
 <style scoped>
