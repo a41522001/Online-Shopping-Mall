@@ -2,7 +2,6 @@
     import Header from "../components/Header.vue";
     import { onMounted, ref, watch, computed } from "vue";
     import Payment from "../components/Payment.vue";
-    const count = ref(1);
     const carts = ref([]);
     onMounted(() => {
         if(localStorage.getItem("cart")){

@@ -1,6 +1,8 @@
 <script setup>
     import { ref, computed } from "vue";
     import { useAuthStore } from "@/stores/authStore";
+    import { useRouter } from "vue-router";
+    const router = useRouter();
     const authStore = useAuthStore();
     const showModal = ref(false);
     function openLogoutModal(){
@@ -14,6 +16,7 @@
         try{
             await authStore.logout();
             showModal.value = false;
+            router.push({path: "/"});
         }catch(err){
             console.log(err);
         }

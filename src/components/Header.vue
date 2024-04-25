@@ -31,6 +31,15 @@
         search.value = "";
         router.push({path: `/product/${findProduct[0].id}`});
     }
+    function switchCartPage(){
+        if(authStore.memberName){
+            router.push({path: "/cart"});
+        }else{
+            loginModal.value = true;
+            return;
+        }
+    }
+    const loginModal = ref(false);
 </script>
 
 <template>
@@ -45,7 +54,7 @@
             <ul>
                 <li v-show="userName">{{ helloName }}</li>
                 <li><router-link to="/home">首頁</router-link></li>
-                <li><router-link to="/cart">購物車</router-link></li>
+                <li><a @click="switchCartPage">購物車</a></li>
                 <li><Signup></Signup></li>
                 <li>
                     <Login v-if="accountState"></Login>
@@ -71,6 +80,14 @@
             </div>
         </div>
     </Transition>
+    <Teleport to="body">
+        <div class="warn-modal" v-show="loginModal">
+            <div class="content">
+                <span @click="loginModal = false">&times;</span>
+                <p>請先登入</p>
+            </div>
+        </div>
+    </Teleport>
 </template>
 
 <style scoped>
@@ -214,7 +231,39 @@
         width: 100%;
         height: 100%;
     }
-    
+    .warn-modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+    }
+    .warn-modal .content{
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+    .warn-modal span{
+        cursor: pointer;
+        font-size: 1.5rem;
+        position: absolute;
+        top: 0;
+        right: 5px;
+    }
+    .warn-modal p{
+        color: #f00;
+        font-size: 1.75rem;
+    }
     @media (max-width: 1200px) {
         header{
             gap: 10px
