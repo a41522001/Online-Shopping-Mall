@@ -18,4 +18,5 @@
 在帳號系統使用pinia與firebase整合來進行資料傳遞並實現註冊、登入與登出。<br>
 組件及路由的商品資訊使用provide及inject來進行深層傳遞，商品加入購物車時則是使用localStroge進行傳遞。<br>
 在每一個頁面都實作RWD並測試在不同裝置及瀏覽器系統是否破版。</p>
+<p><a href="https://a41522001.github.io/cart-test/">專案連結</a></p>
 

@@ -62,4 +62,18 @@
         border-bottom: 30px solid #3498db;
         transition: border-bottom-color 0.3s;
     }
+    @media (max-width: 650px) {
+        #back-top{
+            border-width: 2px;
+            right: 2px;
+            bottom: 5px;
+            width: 40px;
+            height: 40px;
+        }
+        #arrow{
+            width: 15px;
+            height: 15px;
+            border-width: 0 10px 20px 10px ;
+        }
+    }
 </style>
