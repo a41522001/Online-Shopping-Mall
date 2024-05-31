@@ -86,6 +86,11 @@
             margin: 10px;
         }
     }
+    @media (max-width: 700px) {
+        .list .pic{
+            height: 200px;
+        }
+    }
     @media (max-width: 600px) {
         .list{
             margin: 5px;

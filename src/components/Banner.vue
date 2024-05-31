@@ -48,7 +48,7 @@
         max-width: 1200px;
         width: 100%;
         margin: auto;
-        height: 600px;
+        height: 700px;
         position: relative;
         z-index: 1;
     }
@@ -73,6 +73,7 @@
     .banner .banner-pic img{
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
     .prev,
     .next{
@@ -123,6 +124,11 @@
     .dot:hover,
     .dot:active{
         background-color: rgba(255, 255, 255, .5);
+    }
+    @media (max-width: 1200px) {
+        .banner{
+            height: 500px;
+        }
     }
     @media (max-width: 500px) {
         .banner{

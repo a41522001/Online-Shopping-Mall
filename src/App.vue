@@ -65,8 +65,8 @@
     @media (max-width: 650px) {
         #back-top{
             border-width: 2px;
-            right: 2px;
-            bottom: 5px;
+            right: 15px;
+            bottom: 20px;
             width: 40px;
             height: 40px;
         }
